@@ -30,6 +30,8 @@ fn main() {
     }
 }
 
+//test change
+
 fn move_add(board: &mut [u8], mv: &[u8; 2], is_black: bool) {
     // Cast ASCII into alphabet number, which will correspond to actuall coordinates.
     let x = mv[0] - 96;
