@@ -4,9 +4,8 @@ use walkdir::WalkDir;
 use std::fs;
 
 fn main() {
-    let mut bx: Box<[u8; 19*19]> = Box::from([b'e'; 19*19]);
-    bx[20] = b'w';
-    println!("Here is it: {}", bx[21] as char);
+    let mut board: [u8;19*19] = [b'e';19*19];
+    println!("Here is it: {}", board[21] as char);
     let args: Vec<String> = env::args().collect();
     let input_directory = &args[1];
     //let output_directory = &args[2];
@@ -31,11 +30,13 @@ fn main() {
     }
 }
 
-fn move_add(mut board: Box<[&u8; 19*19]>, mv: &[u8; 2], is_black: bool) {
+fn move_add(board: &mut [u8], mv: &[u8; 2], is_black: bool) {
+    // Cast ASCII into alphabet number, which will correspond to actuall coordinates.
     let x = mv[0] - 96;
     let y = mv[1] - 96;
-    let index: usize = x as usize * 19 + y as usize;
-    *board[index] = if is_black {b'w'} else {b'b'};
+    let bsize = board.len();
+    let index: usize = x as usize * bsize + y as usize;
+    board[index] = if is_black {b'w'} else {b'b'};
 }
 
 fn is_sgf(entry: &DirEntry) -> bool {
